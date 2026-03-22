@@ -13,18 +13,27 @@ export default function MessageThreadPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Change the URLs below to your real backend endpoints.
-    // Example:
-    //   fetch(`https://your-api.com/messages/${id}`)
-    //   fetch("https://your-api.com/messages")
-    Promise.all([
-      fetch(`/api/messages/${id}`).then((res) => res.json()),
-      fetch("/api/messages").then((res) => res.json()),
-    ]).then(([conv, list]) => {
+  async function load() {
+    try {
+      const convRes = await fetch(`/api/messages/${id}`);
+      const listRes = await fetch(`/api/messages`);
+
+      const conv = await convRes.json();
+      const list = await listRes.json();
+
       setConversation(conv);
       setConversations(list);
-    }).finally(() => setLoading(false));
-  }, [id]);
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (id) load();
+
+}, [id]);
 
   if (loading) return <div className="flex justify-center py-20 text-gray-400">Loading…</div>;
   if (!conversation) return <div className="flex justify-center py-20 text-gray-400">Conversation not found.</div>;

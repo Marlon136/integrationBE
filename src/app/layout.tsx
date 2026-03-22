@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Fakestagram",
@@ -21,6 +22,7 @@ export default function RootLayout({
         {/* Main content — offset left by sidebar width on desktop, add bottom padding for mobile nav */}
         <main className="lg:pl-64 min-h-screen pb-20 lg:pb-0">
           {children}
+          <Toaster />
         </main>
       </body>
     </html>
