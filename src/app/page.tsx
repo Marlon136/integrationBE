@@ -12,14 +12,14 @@ export default function FeedPage() {
 
    useEffect(() => {
     const fetchPosts = async () => {
-    const responde = await fetch("http://localhost:3000/api/posts")
+    const responde = await fetch("/api/posts")
     const data = await responde.json();
     console.log(data);
       setPosts(data);
       setLoading(false);
     }
     const fetchSuggestions = async () => {
-    const responde = await fetch("http://localhost:3000/api/suggestions")
+    const responde = await fetch("/api/suggestions")
     const data = await responde.json();  
     console.log(data); 
       setSuggestions(data);

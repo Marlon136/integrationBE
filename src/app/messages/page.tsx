@@ -10,7 +10,7 @@ export default function MessagesPage() {
 
   useEffect(() => {
     const fetchMessages = async () => {
-    const responde = await fetch("http://localhost:3000/api/messages")
+    const responde = await fetch("/api/messages")
     const data = await responde.json();  
     console.log(data); 
       setConversations(data);
