@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Conversation, DirectMessage } from "@/lib/types";
 import { CURRENT_USER } from "@/lib/mock-data";
 import { formatDistanceToNow } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface Props {
   initialConversation: Conversation;
@@ -14,6 +15,7 @@ export default function MessageThread({ initialConversation }: Props) {
   const [text, setText] = useState("");
   const [sending, setSending] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -35,9 +37,17 @@ export default function MessageThread({ initialConversation }: Props) {
     setText("");
     setSending(true);
 
-    // TODO: Change the URL below to your real backend endpoint.
-    // Example: fetch("https://your-api.com/messages", { method: "POST", ... })
-
+    toast("mensaje enviado")
+    await fetch("/api/messages", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                text,
+                mediaUrl: file ? URL.createObjectURL(file) : null,
+              }),
+    });
     setSending(false);
   }
 
@@ -85,6 +95,14 @@ export default function MessageThread({ initialConversation }: Props) {
         {/* TODO: Add a file picker here for media messages.
             After picking a file, upload it with UploadThing and pass the returned URL
             as `mediaUrl` in the fetch body above. */}
+
+        <input
+          type="file"
+          onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) setFile(f);
+          }}
+        />
         <input
           type="text"
           value={text}
