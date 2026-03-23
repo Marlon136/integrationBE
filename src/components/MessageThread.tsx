@@ -92,10 +92,6 @@ export default function MessageThread({ initialConversation }: Props) {
 
       {/* Input */}
       <form onSubmit={handleSend} className="flex items-center gap-3 px-4 py-3 border-t border-gray-200">
-        {/* TODO: Add a file picker here for media messages.
-            After picking a file, upload it with UploadThing and pass the returned URL
-            as `mediaUrl` in the fetch body above. */}
-
         <input
           type="file"
           onChange={(e) => {
