@@ -10,7 +10,7 @@ export default function ReelsPage() {
 
   useEffect(() => {
     const fetchReels = async () => {
-    const responde = await fetch("http://localhost:3000/api/reels")
+    const responde = await fetch("/api/reels")
     const data = await responde.json();  
     console.log(data); 
       setReels(data);
